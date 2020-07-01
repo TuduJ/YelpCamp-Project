@@ -3,13 +3,16 @@ var app 		= express();
 var bodyParser 	= require("body-parser");
 var mongoose 	= require("mongoose");
 var Campground	= require("./models/campground");
+var seedDB		= require("./seeds");
 
+
+seedDB();
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://localhost:27017/yelp_camp", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost/yelp_camp_v3");
+mongoose.connect("mongodb://localhost:27017/yelp_camp_v3", {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -18,21 +21,6 @@ app.set("view engine", "ejs");
 
 
 
-// Campground.create(
-// 	{
-// 		name: "Salmon Creek",
-// 		image: "https://images.unsplash.com/photo-1500581276021-a4bbcd0050c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-// 		description: "This is a huge Riverside Area. No bathroom, no water. Natural and wild feel."
-// 	},
-// 	function(err, campground){
-// 		if(err){
-// 			console.log(err);
-// 		}else{
-// 			console.log("Newly Created Campground: ");
-// 			console.log(campground);
-// 		}
-// 	}
-// )
 
 
 
@@ -89,9 +77,9 @@ app.get("/campgrounds/new", function(req, res){
 });
 
 
-
+// SHOW - Dhow details page of the campground
 app.get("/campgrounds/:id", function(req, res){
-	Campground.findById(req.params.id, function(err, foundCampground){
+	Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
 		if(err){
 			console.log(err);
 		}else{
