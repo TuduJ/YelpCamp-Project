@@ -10,8 +10,8 @@ var seedDB		= require("./seeds");
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect("mongodb://localhost/yelp_camp_v3");
-mongoose.connect("mongodb://localhost:27017/yelp_camp_v3", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost/yelp_camp_v5");
+mongoose.connect("mongodb://localhost:27017/yelp_camp_v5", {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 app.use(bodyParser.urlencoded({extended: true}));
