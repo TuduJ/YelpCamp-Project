@@ -45,8 +45,50 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
 
-mongoose.connect("mongodb://localhost/yelp_camp_v10");
-mongoose.connect("mongodb://localhost:27017/yelp_camp_v10", {useNewUrlParser: true, useUnifiedTopology: true});
+
+// =====For local mongoDB server===== 
+// mongoose.connect("mongodb://localhost/yelp_camp_v10");
+// mongoose.connect("mongodb://localhost:27017/yelp_camp_v10", {useNewUrlParser: true, useUnifiedTopology: true});
+
+
+// =====For cloud mongoDB Server=====
+// mongoose.connect("mongodb+srv://yelpcamp:yelpcamp@cluster0.3laow.mongodb.net/<dbname>?retryWrites=true&w=majority", {
+// 	useNewUrlParser: true,
+// 	useCreateIndex: true
+// }).then(() =>{
+// 	console.log("Connected to DB!");
+// }).catch(err =>{
+// 	console.log("Error", err.message);
+// });
+
+
+// Environment variable for local data database
+// export DB_URL_NAME=URL
+
+// Environment variable for heroku server
+// heroku config:set DB_URL_NAME=URL
+
+mongoose.connect(process.env.DATABASEURL, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex: true
+}).then(() =>{
+	console.log("Connected to DB!");
+}).catch(err =>{
+	console.log("Error", err.message);
+});
+
+
+
+// =====For mongoDB Server=====
+// mongoose.connect("mongodb+srv://yelpcamp:yelpcamp@cluster0.3laow.mongodb.net/<dbname>?retryWrites=true&w=majority", {
+// 	useNewUrlParser: true,
+// 	useCreateIndex: true
+// }).then(() =>{
+// 	console.log("Connected to DB!");
+// }).catch(err =>{
+// 	console.log("Error", err.message);
+// });
 
 
 app.use(bodyParser.urlencoded({extended: true}));
